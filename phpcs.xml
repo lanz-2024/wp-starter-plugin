@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<ruleset name="WP Starter Plugin">
+	<description>WordPress Coding Standards for WP Starter Plugin.</description>
+
+	<rule ref="WordPress-Extra"/>
+
+	<file>src/</file>
+
+	<arg name="extensions" value="php"/>
+	<arg name="colors"/>
+	<arg value="sp"/>
+
+	<!-- Minimum supported WordPress version. -->
+	<config name="minimum_supported_wp_version" value="6.5"/>
+
+	<!-- Allow PSR-4 class file names. -->
+	<rule ref="WordPress.Files.FileName">
+		<properties>
+			<property name="strict_class_file_names" value="false"/>
+		</properties>
+	</rule>
+</ruleset>
