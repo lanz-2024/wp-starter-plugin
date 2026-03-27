@@ -24,7 +24,7 @@ class PostTypeProvider {
 	 * @return void
 	 */
 	public function register(): void {
-		add_action( 'init', [ $this, 'registerPostTypes' ] );
+		add_action( 'init', array( $this, 'registerPostTypes' ) );
 	}
 
 	/**

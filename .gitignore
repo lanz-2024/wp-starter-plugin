@@ -1,0 +1,7 @@
+.credentials
+.ssh-credentials
+.env*
+secrets/
+.clickup-session-context.json
+vendor/
+composer.lock

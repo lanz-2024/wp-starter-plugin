@@ -24,7 +24,7 @@ class EmailService {
 	 */
 	public function send_notification( string $to, string $subject, array $data ): bool {
 		$body    = $this->render_template( 'notification', $data );
-		$headers = [ 'Content-Type: text/html; charset=UTF-8' ];
+		$headers = array( 'Content-Type: text/html; charset=UTF-8' );
 
 		return (bool) wp_mail( $to, $subject, $body, $headers );
 	}

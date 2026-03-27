@@ -38,7 +38,7 @@ class RestApiProvider {
 	 * @return void
 	 */
 	public function register(): void {
-		add_action( 'rest_api_init', [ $this, 'registerControllers' ] );
+		add_action( 'rest_api_init', array( $this, 'registerControllers' ) );
 	}
 
 	/**

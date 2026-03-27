@@ -24,11 +24,11 @@ class Settings {
 	 *
 	 * @var array<string,mixed>
 	 */
-	private array $defaults = [
+	private array $defaults = array(
 		'items_per_page' => 10,
 		'enable_cache'   => true,
 		'cache_ttl'      => 3600,
-	];
+	);
 
 	/**
 	 * Merged settings data (saved + defaults).
@@ -41,7 +41,7 @@ class Settings {
 	 * Constructs the Settings model, merging saved values with defaults.
 	 */
 	public function __construct() {
-		$saved      = get_option( self::OPTION_KEY, [] );
+		$saved      = get_option( self::OPTION_KEY, array() );
 		$this->data = is_array( $saved ) ? array_merge( $this->defaults, $saved ) : $this->defaults;
 	}
 

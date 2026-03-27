@@ -13,7 +13,6 @@ namespace WPStarterPlugin\Rest;
  * Provides shared namespace, permission helpers, and schema scaffolding
  * for all plugin REST API controllers.
  *
- * @extends \WP_REST_Controller
  */
 abstract class AbstractController extends \WP_REST_Controller {
 
@@ -37,7 +36,7 @@ abstract class AbstractController extends \WP_REST_Controller {
 	 * @return array<string, mixed>
 	 */
 	protected function getSchema(): array {
-		return [];
+		return array();
 	}
 
 	/**
@@ -69,7 +68,7 @@ abstract class AbstractController extends \WP_REST_Controller {
 	 * @return \WP_Error
 	 */
 	protected function error( string $code, string $message, int $status = 400 ): \WP_Error {
-		return new \WP_Error( $code, $message, [ 'status' => $status ] );
+		return new \WP_Error( $code, $message, array( 'status' => $status ) );
 	}
 
 	/**

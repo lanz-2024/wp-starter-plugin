@@ -24,8 +24,8 @@ class ShortcodeProvider {
 	 * @return void
 	 */
 	public function register(): void {
-		add_shortcode( 'wsp_portfolio', [ new PortfolioShortcode(), 'render' ] );
-		add_shortcode( 'wsp_testimonials', [ new TestimonialsShortcode(), 'render' ] );
-		add_shortcode( 'wsp_faq', [ new FaqShortcode(), 'render' ] );
+		add_shortcode( 'wsp_portfolio', array( new PortfolioShortcode(), 'render' ) );
+		add_shortcode( 'wsp_testimonials', array( new TestimonialsShortcode(), 'render' ) );
+		add_shortcode( 'wsp_faq', array( new FaqShortcode(), 'render' ) );
 	}
 }

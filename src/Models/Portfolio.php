@@ -52,11 +52,11 @@ readonly class Portfolio {
 	 * @return array<string,mixed>
 	 */
 	public function to_array(): array {
-		return [
+		return array(
 			'id'     => $this->id,
 			'title'  => $this->title,
 			'status' => $this->status,
 			'date'   => $this->date,
-		];
+		);
 	}
 }

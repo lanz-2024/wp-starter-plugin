@@ -31,7 +31,7 @@ class Plugin {
 	 *
 	 * @var list<class-string>
 	 */
-	private array $providers = [
+	private array $providers = array(
 		PostTypeProvider::class,
 		TaxonomyProvider::class,
 		RestApiProvider::class,
@@ -40,7 +40,7 @@ class Plugin {
 		CronProvider::class,
 		ShortcodeProvider::class,
 		BlockProvider::class,
-	];
+	);
 
 	/**
 	 * Constructs the Plugin and wires core service bindings.

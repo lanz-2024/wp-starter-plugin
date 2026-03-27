@@ -29,31 +29,31 @@ class FAQ {
 	public function register(): void {
 		register_post_type(
 			self::POST_TYPE,
-			[
+			array(
 				'labels'          => $this->getLabels(),
 				'public'          => false,
 				'show_ui'         => true,
 				'show_in_menu'    => true,
 				'show_in_rest'    => true,
 				'rest_base'       => 'faqs',
-				'supports'        => [ 'title', 'editor' ],
+				'supports'        => array( 'title', 'editor' ),
 				'menu_icon'       => 'dashicons-editor-help',
 				'capability_type' => 'post',
 				'map_meta_cap'    => true,
 				'menu_position'   => 27,
-			]
+			)
 		);
 
 		register_post_meta(
 			self::POST_TYPE,
 			self::META_PREFIX . 'order',
-			[
+			array(
 				'type'          => 'integer',
 				'description'   => __( 'Display order', 'wp-starter-plugin' ),
 				'single'        => true,
 				'show_in_rest'  => true,
 				'auth_callback' => fn() => current_user_can( 'edit_posts' ),
-			]
+			)
 		);
 	}
 
@@ -63,7 +63,7 @@ class FAQ {
 	 * @return array<string, string>
 	 */
 	private function getLabels(): array {
-		return [
+		return array(
 			'name'          => __( 'FAQs', 'wp-starter-plugin' ),
 			'singular_name' => __( 'FAQ', 'wp-starter-plugin' ),
 			'add_new'       => __( 'Add New', 'wp-starter-plugin' ),
@@ -72,7 +72,7 @@ class FAQ {
 			'all_items'     => __( 'All FAQs', 'wp-starter-plugin' ),
 			'not_found'     => __( 'No FAQs found.', 'wp-starter-plugin' ),
 			'menu_name'     => __( 'FAQs', 'wp-starter-plugin' ),
-		];
+		);
 	}
 
 	/**

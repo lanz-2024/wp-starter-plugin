@@ -45,7 +45,7 @@ trait HasMeta {
 	 */
 	public function getMetaAll( int $postId, string $key ): array {
 		$values = get_post_meta( $postId, $this->getMetaPrefix() . $key, false );
-		return is_array( $values ) ? array_values( $values ) : [];
+		return is_array( $values ) ? array_values( $values ) : array();
 	}
 
 	/**

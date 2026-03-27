@@ -25,7 +25,7 @@ trait HasHooks {
 	 * @return void
 	 */
 	protected function addAction( string $hook, string $method, int $priority = 10, int $args = 1 ): void {
-		add_action( $hook, [ $this, $method ], $priority, $args );
+		add_action( $hook, array( $this, $method ), $priority, $args );
 	}
 
 	/**
@@ -38,7 +38,7 @@ trait HasHooks {
 	 * @return void
 	 */
 	protected function addFilter( string $hook, string $method, int $priority = 10, int $args = 1 ): void {
-		add_filter( $hook, [ $this, $method ], $priority, $args );
+		add_filter( $hook, array( $this, $method ), $priority, $args );
 	}
 
 	/**
@@ -50,7 +50,7 @@ trait HasHooks {
 	 * @return void
 	 */
 	protected function removeAction( string $hook, string $method, int $priority = 10 ): void {
-		remove_action( $hook, [ $this, $method ], $priority );
+		remove_action( $hook, array( $this, $method ), $priority );
 	}
 
 	/**
@@ -62,6 +62,6 @@ trait HasHooks {
 	 * @return void
 	 */
 	protected function removeFilter( string $hook, string $method, int $priority = 10 ): void {
-		remove_filter( $hook, [ $this, $method ], $priority );
+		remove_filter( $hook, array( $this, $method ), $priority );
 	}
 }
