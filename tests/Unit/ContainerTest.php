@@ -9,6 +9,7 @@ use Brain\Monkey\Functions;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
 use WPStarterPlugin\Container;
+use WPStarterPlugin\NotFoundException;
 
 /**
  * Tests for the PSR-11 DI container.
@@ -69,7 +70,7 @@ class ContainerTest extends TestCase
     {
         $container = new Container();
 
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(NotFoundException::class);
         $container->get('does_not_exist');
     }
 }

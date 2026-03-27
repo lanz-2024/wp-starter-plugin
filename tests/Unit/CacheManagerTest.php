@@ -21,6 +21,8 @@ class CacheManagerTest extends TestCase
     {
         parent::setUp();
         Monkey\setUp();
+        // wp_using_ext_object_cache is called in CacheManager::__construct().
+        Functions\when('wp_using_ext_object_cache')->justReturn(false);
     }
 
     protected function tearDown(): void
@@ -34,7 +36,7 @@ class CacheManagerTest extends TestCase
         Functions\when('get_transient')->justReturn('cached_value');
 
         $cache  = new CacheManager();
-        $result = $cache->remember('my_key', 3600, static fn() => 'fresh_value');
+        $result = $cache->remember('my_key', static fn() => 'fresh_value', 3600);
 
         $this->assertSame('cached_value', $result);
     }
@@ -47,10 +49,10 @@ class CacheManagerTest extends TestCase
         $callbackCalled = false;
         $cache          = new CacheManager();
 
-        $result = $cache->remember('my_key', 3600, static function () use (&$callbackCalled) {
+        $result = $cache->remember('my_key', static function () use (&$callbackCalled) {
             $callbackCalled = true;
             return 'fresh_value';
-        });
+        }, 3600);
 
         $this->assertTrue($callbackCalled);
         $this->assertSame('fresh_value', $result);
@@ -60,11 +62,11 @@ class CacheManagerTest extends TestCase
     {
         Functions\expect('delete_transient')
             ->once()
-            ->with('my_key')
+            ->with('wp_starter_my_key')
             ->andReturn(true);
 
         $cache = new CacheManager();
-        $cache->forget('my_key');
+        $cache->delete('my_key');
 
         $this->addToAssertionCount(1);
     }

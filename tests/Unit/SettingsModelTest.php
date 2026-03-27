@@ -55,7 +55,7 @@ class SettingsModelTest extends TestCase
             ->with('wp_starter_plugin_settings', \Mockery::type('array'));
 
         $settings = new Settings();
-        $settings->update('per_page', 50);
+        $settings->set('per_page', 50);
 
         // Assertion is in the expectation above.
         $this->addToAssertionCount(1);
