@@ -9,20 +9,19 @@ parameters:
     # Suppressed patterns that no longer match are non-fatal (patterns may be future-facing).
     reportUnmatchedIgnoredErrors: false
     excludePaths:
-        # WP-CLI classes extend WP_CLI_Command (no stubs) — excludePaths required in PHPStan 2.x.
+        # WP-CLI: extends WP_CLI_Command — excludePaths required in PHPStan 2.x for "extends unknown class".
         - src/CLI
+        # Providers reference scaffolded but not-yet-implemented classes (Admin, Ajax, Shortcodes, Widgets).
+        - src/Providers
+        # Trait used zero times by static analysis; registered dynamically at runtime.
+        - src/Traits
     ignoreErrors:
-        # Plugin classes scaffolded but not yet implemented (stubs exist in Providers, no source file).
-        - '#(Instantiated|Class) WPStarterPlugin\\\\#'
-        - '#Call to method [a-z_]+\(\) on an unknown class WPStarterPlugin\\\\#'
-        # register_widget receives a class-string at runtime; WP stubs type is too strict.
-        - '#register_widget expects class-string#'
+        # WP_CLI static call in Plugin.php — class only exists when WP-CLI is loaded.
+        - '#unknown class WP_CLI#'
         # Plugin-defined constants set in the main plugin file at runtime.
         - '#Constant WP_STARTER_PLUGIN_#'
         # WP constants not covered by current stubs version.
         - '#Constant HOUR_IN_SECONDS not found#'
-        # Trait used by providers registered at runtime — not statically detectable.
-        - '#Trait WPStarterPlugin\\\\Traits\\\\HasHooks is used zero times#'
         # DI container resolves by class name — type erased to object.
         - '#constructor expects .*WPStarterPlugin.*, object given#'
         - '#Call to an undefined method object::#'
