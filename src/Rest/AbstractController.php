@@ -13,7 +13,6 @@ namespace WPStarterPlugin\Rest;
  * Provides shared namespace, permission helpers, and schema scaffolding
  * for all plugin REST API controllers.
  *
- * @extends \WP_REST_Controller
  */
 abstract class AbstractController extends \WP_REST_Controller {
 
