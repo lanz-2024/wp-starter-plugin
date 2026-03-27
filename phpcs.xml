@@ -34,6 +34,20 @@
 	<rule ref="Universal.NamingConventions.NoReservedKeywordParameterNames">
 		<exclude name="Universal.NamingConventions.NoReservedKeywordParameterNames.abstractFound"/>
 		<exclude name="Universal.NamingConventions.NoReservedKeywordParameterNames.classFound"/>
+		<exclude name="Universal.NamingConventions.NoReservedKeywordParameterNames.defaultFound"/>
+	</rule>
+
+	<!-- serialize() and error_log() are used intentionally in demo code. -->
+	<rule ref="WordPress.PHP.DiscouragedPHPFunctions">
+		<exclude name="WordPress.PHP.DiscouragedPHPFunctions.serialize_serialize"/>
+	</rule>
+	<rule ref="WordPress.PHP.DevelopmentFunctions">
+		<exclude name="WordPress.PHP.DevelopmentFunctions.error_log_error_log"/>
+	</rule>
+
+	<!-- Unused parameter warnings from WP filter callbacks with fixed signatures. -->
+	<rule ref="Generic.CodeAnalysis.UnusedFunctionParameter">
+		<exclude name="Generic.CodeAnalysis.UnusedFunctionParameter.Found"/>
 	</rule>
 
 	<!-- Exception messages in DI container do not require wp escaping. -->
