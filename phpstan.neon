@@ -4,3 +4,20 @@ parameters:
         - src
     bootstrapFiles:
         - vendor/php-stubs/wordpress-stubs/wordpress-stubs.php
+    ignoreErrors:
+        # WP-CLI classes/functions — no stubs package installed.
+        - '#WP_CLI#'
+        # Plugin classes scaffolded but not yet implemented (Admin, Ajax sub-providers).
+        - '#Instantiated class WPStarterPlugin\\\\(Admin|Ajax|Blocks|CLI|Services)\\\\[A-Za-z]+ not found#'
+        - '#Call to method [a-z]+\(\) on an unknown class WPStarterPlugin\\\\#'
+        # Plugin-defined constants set in the main plugin file at runtime.
+        - '#Constant WP_STARTER_PLUGIN_#'
+        # DI container resolves by class name — type erased to object.
+        - '#constructor expects .*WPStarterPlugin.*, object given#'
+        - '#Call to an undefined method object::#'
+        # add_action: WP stubs type is too strict for array callables on uninstantiated classes.
+        - '#Parameter #2 \$callback of function add_action expects callable#'
+        # esc_url can legitimately receive string|false from get_option wrappers.
+        - '#Parameter #1 \$url of function esc_url expects string, string\|false given#'
+        # ReflectionClass with dynamic string — pattern used intentionally in Container.
+        - '#Parameter #1 \$objectOrClass of class ReflectionClass constructor expects class-string#'

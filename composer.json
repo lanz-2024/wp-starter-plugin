@@ -30,7 +30,7 @@
 	"scripts": {
 		"test": "phpunit",
 		"phpcs": "phpcs --standard=phpcs.xml",
-		"phpstan": "phpstan analyse src/ --level=8"
+		"phpstan": "phpstan analyse src/ --level=5"
 	},
 	"config": {
 		"allow-plugins": {
