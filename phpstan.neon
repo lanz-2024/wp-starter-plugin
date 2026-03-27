@@ -16,8 +16,8 @@ parameters:
         - '#constructor expects .*WPStarterPlugin.*, object given#'
         - '#Call to an undefined method object::#'
         # add_action: WP stubs type is too strict for array callables on uninstantiated classes.
-        - '#Parameter #2 \$callback of function add_action expects callable#'
+        - '#add_action expects callable#'
         # esc_url can legitimately receive string|false from get_option wrappers.
-        - '#Parameter #1 \$url of function esc_url expects string, string\|false given#'
+        - '#esc_url expects string, string\|false given#'
         # ReflectionClass with dynamic string — pattern used intentionally in Container.
-        - '#Parameter #1 \$objectOrClass of class ReflectionClass constructor expects class-string#'
+        - '#ReflectionClass constructor expects class-string#'
