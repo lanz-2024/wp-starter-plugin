@@ -43,12 +43,14 @@ class SeedCommand extends WP_CLI_Command {
 		$progress = \WP_CLI\Utils\make_progress_bar( "Creating {$count} portfolio items", $count );
 
 		for ( $i = 1; $i <= $count; $i++ ) {
-			wp_insert_post( [
-				'post_type'    => 'portfolio',
-				'post_title'   => "Portfolio Item {$i}",
-				'post_status'  => 'publish',
-				'post_content' => "Sample content for portfolio item {$i}.",
-			] );
+			wp_insert_post(
+				array(
+					'post_type'    => 'portfolio',
+					'post_title'   => "Portfolio Item {$i}",
+					'post_status'  => 'publish',
+					'post_content' => "Sample content for portfolio item {$i}.",
+				)
+			);
 
 			$progress->tick();
 		}

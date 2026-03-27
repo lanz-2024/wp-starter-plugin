@@ -20,8 +20,8 @@ class RewriteRules {
 	 * @return void
 	 */
 	public function register(): void {
-		add_action( 'init', [ $this, 'add_rewrite_rules' ] );
-		add_filter( 'query_vars', [ $this, 'add_query_vars' ] );
+		add_action( 'init', array( $this, 'add_rewrite_rules' ) );
+		add_filter( 'query_vars', array( $this, 'add_query_vars' ) );
 	}
 
 	/**

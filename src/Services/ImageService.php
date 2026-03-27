@@ -20,8 +20,8 @@ class ImageService {
 	 * @return void
 	 */
 	public function register(): void {
-		add_filter( 'wp_handle_upload', [ $this, 'handle_upload' ] );
-		add_action( 'init', [ $this, 'register_image_sizes' ] );
+		add_filter( 'wp_handle_upload', array( $this, 'handle_upload' ) );
+		add_action( 'init', array( $this, 'register_image_sizes' ) );
 	}
 
 	/**

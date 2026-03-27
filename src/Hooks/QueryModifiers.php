@@ -22,7 +22,7 @@ class QueryModifiers {
 	 * @return void
 	 */
 	public function register(): void {
-		add_action( 'pre_get_posts', [ $this, 'modify_portfolio_archive' ] );
+		add_action( 'pre_get_posts', array( $this, 'modify_portfolio_archive' ) );
 	}
 
 	/**

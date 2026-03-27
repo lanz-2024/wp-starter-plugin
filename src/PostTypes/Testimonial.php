@@ -29,19 +29,19 @@ class Testimonial {
 	public function register(): void {
 		register_post_type(
 			self::POST_TYPE,
-			[
-				'labels'           => $this->getLabels(),
-				'public'           => false,
-				'show_ui'          => true,
-				'show_in_menu'     => true,
-				'show_in_rest'     => true,
-				'rest_base'        => 'testimonials',
-				'supports'         => [ 'title', 'editor', 'thumbnail' ],
-				'menu_icon'        => 'dashicons-format-quote',
-				'capability_type'  => 'post',
-				'map_meta_cap'     => true,
-				'menu_position'    => 26,
-			]
+			array(
+				'labels'          => $this->getLabels(),
+				'public'          => false,
+				'show_ui'         => true,
+				'show_in_menu'    => true,
+				'show_in_rest'    => true,
+				'rest_base'       => 'testimonials',
+				'supports'        => array( 'title', 'editor', 'thumbnail' ),
+				'menu_icon'       => 'dashicons-format-quote',
+				'capability_type' => 'post',
+				'map_meta_cap'    => true,
+				'menu_position'   => 26,
+			)
 		);
 
 		$this->registerMetaFields();
@@ -53,25 +53,37 @@ class Testimonial {
 	 * @return void
 	 */
 	private function registerMetaFields(): void {
-		$fields = [
-			'author_name'  => [ 'type' => 'string', 'description' => __( 'Author name', 'wp-starter-plugin' ) ],
-			'author_title' => [ 'type' => 'string', 'description' => __( 'Author job title', 'wp-starter-plugin' ) ],
-			'company'      => [ 'type' => 'string', 'description' => __( 'Company name', 'wp-starter-plugin' ) ],
-			'rating'       => [ 'type' => 'integer', 'description' => __( 'Rating (1-5)', 'wp-starter-plugin' ) ],
-		];
+		$fields = array(
+			'author_name'  => array(
+				'type'        => 'string',
+				'description' => __( 'Author name', 'wp-starter-plugin' ),
+			),
+			'author_title' => array(
+				'type'        => 'string',
+				'description' => __( 'Author job title', 'wp-starter-plugin' ),
+			),
+			'company'      => array(
+				'type'        => 'string',
+				'description' => __( 'Company name', 'wp-starter-plugin' ),
+			),
+			'rating'       => array(
+				'type'        => 'integer',
+				'description' => __( 'Rating (1-5)', 'wp-starter-plugin' ),
+			),
+		);
 
 		foreach ( $fields as $key => $schema ) {
 			register_post_meta(
 				self::POST_TYPE,
 				self::META_PREFIX . $key,
-				[
+				array(
 					'type'              => $schema['type'],
 					'description'       => $schema['description'],
 					'single'            => true,
 					'show_in_rest'      => true,
 					'sanitize_callback' => 'sanitize_text_field',
 					'auth_callback'     => fn() => current_user_can( 'edit_posts' ),
-				]
+				)
 			);
 		}
 	}
@@ -82,16 +94,16 @@ class Testimonial {
 	 * @return array<string, string>
 	 */
 	private function getLabels(): array {
-		return [
-			'name'               => __( 'Testimonials', 'wp-starter-plugin' ),
-			'singular_name'      => __( 'Testimonial', 'wp-starter-plugin' ),
-			'add_new'            => __( 'Add New', 'wp-starter-plugin' ),
-			'add_new_item'       => __( 'Add New Testimonial', 'wp-starter-plugin' ),
-			'edit_item'          => __( 'Edit Testimonial', 'wp-starter-plugin' ),
-			'all_items'          => __( 'All Testimonials', 'wp-starter-plugin' ),
-			'not_found'          => __( 'No testimonials found.', 'wp-starter-plugin' ),
-			'menu_name'          => __( 'Testimonials', 'wp-starter-plugin' ),
-		];
+		return array(
+			'name'          => __( 'Testimonials', 'wp-starter-plugin' ),
+			'singular_name' => __( 'Testimonial', 'wp-starter-plugin' ),
+			'add_new'       => __( 'Add New', 'wp-starter-plugin' ),
+			'add_new_item'  => __( 'Add New Testimonial', 'wp-starter-plugin' ),
+			'edit_item'     => __( 'Edit Testimonial', 'wp-starter-plugin' ),
+			'all_items'     => __( 'All Testimonials', 'wp-starter-plugin' ),
+			'not_found'     => __( 'No testimonials found.', 'wp-starter-plugin' ),
+			'menu_name'     => __( 'Testimonials', 'wp-starter-plugin' ),
+		);
 	}
 
 	/**

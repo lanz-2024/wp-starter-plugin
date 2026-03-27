@@ -20,9 +20,9 @@ class ContentFilters {
 	 * @return void
 	 */
 	public function register(): void {
-		add_filter( 'the_content', [ $this, 'append_portfolio_link' ] );
-		add_filter( 'excerpt_length', [ $this, 'set_excerpt_length' ] );
-		add_filter( 'body_class', [ $this, 'add_body_classes' ] );
+		add_filter( 'the_content', array( $this, 'append_portfolio_link' ) );
+		add_filter( 'excerpt_length', array( $this, 'set_excerpt_length' ) );
+		add_filter( 'body_class', array( $this, 'add_body_classes' ) );
 	}
 
 	/**

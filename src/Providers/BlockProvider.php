@@ -20,7 +20,7 @@ class BlockProvider {
 	 * @return void
 	 */
 	public function register(): void {
-		add_action( 'init', [ $this, 'registerBlocks' ] );
+		add_action( 'init', array( $this, 'registerBlocks' ) );
 	}
 
 	/**
@@ -43,7 +43,7 @@ class BlockProvider {
 		}
 
 		foreach ( $entries as $entry ) {
-			if ( in_array( $entry, [ '.', '..' ], true ) ) {
+			if ( in_array( $entry, array( '.', '..' ), true ) ) {
 				continue;
 			}
 

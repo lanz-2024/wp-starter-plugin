@@ -48,7 +48,7 @@ class QueryOptimizer {
 		string $industry = '',
 		?bool $featured = null
 	): array {
-		$args = [
+		$args = array(
 			'post_type'              => $postType,
 			'posts_per_page'         => $perPage,
 			'paged'                  => $page,
@@ -59,24 +59,24 @@ class QueryOptimizer {
 			'update_post_term_cache' => true,
 			'update_post_meta_cache' => true,
 			'ignore_sticky_posts'    => true,
-		];
+		);
 
-		$tax_query = [];
+		$tax_query = array();
 
 		if ( $skill !== '' ) {
-			$tax_query[] = [
+			$tax_query[] = array(
 				'taxonomy' => 'skill',
 				'field'    => 'slug',
 				'terms'    => $skill,
-			];
+			);
 		}
 
 		if ( $industry !== '' ) {
-			$tax_query[] = [
+			$tax_query[] = array(
 				'taxonomy' => 'industry',
 				'field'    => 'slug',
 				'terms'    => $industry,
-			];
+			);
 		}
 
 		if ( count( $tax_query ) > 1 ) {
@@ -88,13 +88,13 @@ class QueryOptimizer {
 		}
 
 		if ( $featured !== null ) {
-			$args['meta_query'] = [
-				[
+			$args['meta_query'] = array(
+				array(
 					'key'     => Portfolio::META_PREFIX . 'featured',
 					'value'   => $featured ? '1' : '0',
 					'compare' => '=',
-				],
-			];
+				),
+			);
 		}
 
 		return $args;
@@ -110,7 +110,7 @@ class QueryOptimizer {
 	 * @return array<string, mixed>
 	 */
 	public function buildSingleArgs( string $postType, int $postId ): array {
-		return [
+		return array(
 			'post_type'              => $postType,
 			'p'                      => $postId,
 			'posts_per_page'         => 1,
@@ -118,7 +118,7 @@ class QueryOptimizer {
 			'no_found_rows'          => true,
 			'update_post_term_cache' => true,
 			'update_post_meta_cache' => true,
-		];
+		);
 	}
 
 	/**

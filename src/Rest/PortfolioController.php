@@ -40,8 +40,8 @@ class PortfolioController extends AbstractController {
 	 * @param QueryOptimizer $queryOptimizer Query optimiser.
 	 */
 	public function __construct( CacheManager $cache, QueryOptimizer $queryOptimizer ) {
-		$this->cache           = $cache;
-		$this->queryOptimizer  = $queryOptimizer;
+		$this->cache             = $cache;
+		$this->queryOptimizer    = $queryOptimizer;
 		$this->portfolioPostType = new PortfolioPostType();
 	}
 
@@ -54,45 +54,45 @@ class PortfolioController extends AbstractController {
 		register_rest_route(
 			$this->namespace,
 			'/' . $this->rest_base,
-			[
-				[
+			array(
+				array(
 					'methods'             => \WP_REST_Server::READABLE,
-					'callback'            => [ $this, 'getItems' ],
-					'permission_callback' => [ $this, 'canRead' ],
+					'callback'            => array( $this, 'getItems' ),
+					'permission_callback' => array( $this, 'canRead' ),
 					'args'                => $this->getCollectionParams(),
-				],
-				[
+				),
+				array(
 					'methods'             => \WP_REST_Server::CREATABLE,
-					'callback'            => [ $this, 'createItem' ],
-					'permission_callback' => [ $this, 'canEdit' ],
-					'args'                => $this->getItemSchema()['properties'] ?? [],
-				],
-				'schema' => [ $this, 'get_public_item_schema' ],
-			]
+					'callback'            => array( $this, 'createItem' ),
+					'permission_callback' => array( $this, 'canEdit' ),
+					'args'                => $this->getItemSchema()['properties'] ?? array(),
+				),
+				'schema' => array( $this, 'get_public_item_schema' ),
+			)
 		);
 
 		register_rest_route(
 			$this->namespace,
 			'/' . $this->rest_base . '/(?P<id>[\d]+)',
-			[
-				[
+			array(
+				array(
 					'methods'             => \WP_REST_Server::READABLE,
-					'callback'            => [ $this, 'getItem' ],
-					'permission_callback' => [ $this, 'canRead' ],
-					'args'                => [ 'id' => [ 'validate_callback' => 'is_numeric' ] ],
-				],
-				[
+					'callback'            => array( $this, 'getItem' ),
+					'permission_callback' => array( $this, 'canRead' ),
+					'args'                => array( 'id' => array( 'validate_callback' => 'is_numeric' ) ),
+				),
+				array(
 					'methods'             => \WP_REST_Server::EDITABLE,
-					'callback'            => [ $this, 'updateItem' ],
-					'permission_callback' => [ $this, 'canEdit' ],
-				],
-				[
+					'callback'            => array( $this, 'updateItem' ),
+					'permission_callback' => array( $this, 'canEdit' ),
+				),
+				array(
 					'methods'             => \WP_REST_Server::DELETABLE,
-					'callback'            => [ $this, 'deleteItem' ],
-					'permission_callback' => [ $this, 'canEdit' ],
-				],
-				'schema' => [ $this, 'get_public_item_schema' ],
-			]
+					'callback'            => array( $this, 'deleteItem' ),
+					'permission_callback' => array( $this, 'canEdit' ),
+				),
+				'schema' => array( $this, 'get_public_item_schema' ),
+			)
 		);
 	}
 
@@ -124,7 +124,7 @@ class PortfolioController extends AbstractController {
 				);
 
 				$query = new \WP_Query( $args );
-				$items = [];
+				$items = array();
 
 				foreach ( $query->posts as $post ) {
 					if ( $post instanceof \WP_Post ) {
@@ -132,17 +132,21 @@ class PortfolioController extends AbstractController {
 					}
 				}
 
-				return [
+				return array(
 					'items' => $items,
 					'total' => (int) $query->found_posts,
 					'pages' => (int) $query->max_num_pages,
-				];
+				);
 			},
 			300
 		);
 
 		if ( ! is_array( $data ) ) {
-			$data = [ 'items' => [], 'total' => 0, 'pages' => 0 ];
+			$data = array(
+				'items' => array(),
+				'total' => 0,
+				'pages' => 0,
+			);
 		}
 
 		$response = new WP_REST_Response( $data['items'], 200 );
@@ -184,12 +188,12 @@ class PortfolioController extends AbstractController {
 		}
 
 		$post_id = wp_insert_post(
-			[
+			array(
 				'post_title'   => $title,
 				'post_content' => $content,
 				'post_type'    => PortfolioPostType::POST_TYPE,
 				'post_status'  => 'publish',
-			],
+			),
 			true
 		);
 
@@ -222,7 +226,7 @@ class PortfolioController extends AbstractController {
 			return $this->error( 'not_found', __( 'Portfolio item not found.', 'wp-starter-plugin' ), 404 );
 		}
 
-		$update_args = [ 'ID' => $id ];
+		$update_args = array( 'ID' => $id );
 
 		$title = $request->get_param( 'title' );
 		if ( $title !== null ) {
@@ -272,7 +276,13 @@ class PortfolioController extends AbstractController {
 
 		$this->cache->delete( 'portfolio_item_' . $id );
 
-		return new WP_REST_Response( [ 'deleted' => true, 'id' => $id ], 200 );
+		return new WP_REST_Response(
+			array(
+				'deleted' => true,
+				'id'      => $id,
+			),
+			200
+		);
 	}
 
 	/**
@@ -282,7 +292,7 @@ class PortfolioController extends AbstractController {
 	 * @return array<string, mixed>
 	 */
 	private function prepareItem( \WP_Post $post ): array {
-		return [
+		return array(
 			'id'           => $post->ID,
 			'title'        => get_the_title( $post ),
 			'excerpt'      => get_the_excerpt( $post ),
@@ -299,7 +309,7 @@ class PortfolioController extends AbstractController {
 			'permalink'    => get_permalink( $post->ID ),
 			'date'         => $post->post_date_gmt,
 			'modified'     => $post->post_modified_gmt,
-		];
+		);
 	}
 
 	/**
@@ -312,7 +322,7 @@ class PortfolioController extends AbstractController {
 	private function getTermNames( int $postId, string $taxonomy ): array {
 		$terms = get_the_terms( $postId, $taxonomy );
 		if ( ! is_array( $terms ) ) {
-			return [];
+			return array();
 		}
 		return array_values( array_map( fn( \WP_Term $t ) => $t->name, $terms ) );
 	}
@@ -325,14 +335,14 @@ class PortfolioController extends AbstractController {
 	 * @return void
 	 */
 	private function saveMeta( int $postId, WP_REST_Request $request ): void {
-		$meta_map = [
+		$meta_map = array(
 			'url'          => 'sanitize_url',
 			'repo_url'     => 'sanitize_url',
 			'client'       => 'sanitize_text_field',
 			'year'         => 'intval',
 			'featured'     => 'boolval',
 			'technologies' => 'sanitize_text_field',
-		];
+		);
 
 		foreach ( $meta_map as $key => $sanitizer ) {
 			$value = $request->get_param( $key );
@@ -348,21 +358,21 @@ class PortfolioController extends AbstractController {
 	 * @return array<string, array<string, mixed>>
 	 */
 	private function getCollectionParams(): array {
-		return [
-			'per_page' => [
+		return array(
+			'per_page' => array(
 				'default'           => 10,
 				'sanitize_callback' => 'absint',
 				'validate_callback' => fn( mixed $v ) => is_numeric( $v ) && (int) $v > 0,
-			],
-			'page'     => [
+			),
+			'page'     => array(
 				'default'           => 1,
 				'sanitize_callback' => 'absint',
 				'validate_callback' => fn( mixed $v ) => is_numeric( $v ) && (int) $v > 0,
-			],
-			'skill'    => [ 'sanitize_callback' => 'sanitize_text_field' ],
-			'industry' => [ 'sanitize_callback' => 'sanitize_text_field' ],
-			'featured' => [ 'sanitize_callback' => 'rest_sanitize_boolean' ],
-		];
+			),
+			'skill'    => array( 'sanitize_callback' => 'sanitize_text_field' ),
+			'industry' => array( 'sanitize_callback' => 'sanitize_text_field' ),
+			'featured' => array( 'sanitize_callback' => 'rest_sanitize_boolean' ),
+		);
 	}
 
 	/**
@@ -371,21 +381,33 @@ class PortfolioController extends AbstractController {
 	 * @return array<string, mixed>
 	 */
 	protected function getItemSchema(): array {
-		return [
+		return array(
 			'$schema'    => 'http://json-schema.org/draft-04/schema#',
 			'title'      => 'portfolio',
 			'type'       => 'object',
-			'properties' => [
-				'id'           => [ 'type' => 'integer', 'readonly' => true ],
-				'title'        => [ 'type' => 'string', 'required' => true ],
-				'content'      => [ 'type' => 'string' ],
-				'url'          => [ 'type' => 'string', 'format' => 'uri' ],
-				'repo_url'     => [ 'type' => 'string', 'format' => 'uri' ],
-				'client'       => [ 'type' => 'string' ],
-				'year'         => [ 'type' => 'integer' ],
-				'featured'     => [ 'type' => 'boolean' ],
-				'technologies' => [ 'type' => 'string' ],
-			],
-		];
+			'properties' => array(
+				'id'           => array(
+					'type'     => 'integer',
+					'readonly' => true,
+				),
+				'title'        => array(
+					'type'     => 'string',
+					'required' => true,
+				),
+				'content'      => array( 'type' => 'string' ),
+				'url'          => array(
+					'type'   => 'string',
+					'format' => 'uri',
+				),
+				'repo_url'     => array(
+					'type'   => 'string',
+					'format' => 'uri',
+				),
+				'client'       => array( 'type' => 'string' ),
+				'year'         => array( 'type' => 'integer' ),
+				'featured'     => array( 'type' => 'boolean' ),
+				'technologies' => array( 'type' => 'string' ),
+			),
+		);
 	}
 }

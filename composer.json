@@ -29,7 +29,7 @@
 	},
 	"scripts": {
 		"test": "phpunit",
-		"phpcs": "phpcs --standard=WordPress-Extra src/",
+		"phpcs": "phpcs --standard=phpcs.xml",
 		"phpstan": "phpstan analyse src/ --level=8"
 	},
 	"config": {

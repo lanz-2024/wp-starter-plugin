@@ -28,14 +28,14 @@ class Container implements ContainerInterface {
 	 *
 	 * @var array<string, Closure(Container): object>
 	 */
-	private array $bindings = [];
+	private array $bindings = array();
 
 	/**
 	 * Resolved singleton instances keyed by abstract identifier.
 	 *
 	 * @var array<string, object>
 	 */
-	private array $singletons = [];
+	private array $singletons = array();
 
 	/**
 	 * Registers a transient factory binding.

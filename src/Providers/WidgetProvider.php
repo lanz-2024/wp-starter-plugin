@@ -22,7 +22,7 @@ class WidgetProvider {
 	 * @return void
 	 */
 	public function register(): void {
-		add_action( 'widgets_init', [ $this, 'registerWidgets' ] );
+		add_action( 'widgets_init', array( $this, 'registerWidgets' ) );
 	}
 
 	/**

@@ -20,9 +20,9 @@ class CronProvider {
 	 * @return void
 	 */
 	public function register(): void {
-		add_filter( 'cron_schedules', [ $this, 'addSchedules' ] );
-		add_action( 'wsp_cleanup_transients', [ $this, 'cleanupTransients' ] );
-		add_action( 'wsp_sync_data', [ $this, 'syncData' ] );
+		add_filter( 'cron_schedules', array( $this, 'addSchedules' ) );
+		add_action( 'wsp_cleanup_transients', array( $this, 'cleanupTransients' ) );
+		add_action( 'wsp_sync_data', array( $this, 'syncData' ) );
 
 		if ( ! wp_next_scheduled( 'wsp_cleanup_transients' ) ) {
 			wp_schedule_event( time(), 'daily', 'wsp_cleanup_transients' );
@@ -41,10 +41,10 @@ class CronProvider {
 	 */
 	public function addSchedules( array $schedules ): array {
 		if ( ! isset( $schedules['every_six_hours'] ) ) {
-			$schedules['every_six_hours'] = [
+			$schedules['every_six_hours'] = array(
 				'interval' => 6 * HOUR_IN_SECONDS,
 				'display'  => __( 'Every 6 Hours', 'wp-starter-plugin' ),
-			];
+			);
 		}
 
 		return $schedules;

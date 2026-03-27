@@ -13,10 +13,47 @@
 	<!-- Minimum supported WordPress version. -->
 	<config name="minimum_supported_wp_version" value="6.5"/>
 
-	<!-- Allow PSR-4 class file names. -->
+	<!-- PSR-4 filenames — class names don't need to be hyphenated lowercase. -->
 	<rule ref="WordPress.Files.FileName">
-		<properties>
-			<property name="strict_class_file_names" value="false"/>
-		</properties>
+		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
+		<exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
 	</rule>
+
+	<!-- PSR-1/PSR-12 naming: camelCase methods and variables are intentional. -->
+	<rule ref="WordPress.NamingConventions.ValidFunctionName">
+		<exclude name="WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid"/>
+	</rule>
+	<rule ref="WordPress.NamingConventions.ValidVariableName">
+		<exclude name="WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase"/>
+		<exclude name="WordPress.NamingConventions.ValidVariableName.PropertyNotSnakeCase"/>
+		<exclude name="WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase"/>
+		<exclude name="WordPress.NamingConventions.ValidVariableName.InterpolatedVariableNotSnakeCase"/>
+	</rule>
+
+	<!-- Reserved keyword parameter names are standard PHP 8 OOP patterns. -->
+	<rule ref="Universal.NamingConventions.NoReservedKeywordParameterNames">
+		<exclude name="Universal.NamingConventions.NoReservedKeywordParameterNames.abstractFound"/>
+		<exclude name="Universal.NamingConventions.NoReservedKeywordParameterNames.classFound"/>
+	</rule>
+
+	<!-- Exception messages in DI container do not require wp escaping. -->
+	<rule ref="WordPress.Security.EscapeOutput">
+		<exclude name="WordPress.Security.EscapeOutput.ExceptionNotEscaped"/>
+	</rule>
+
+	<!-- Short arrays [] are idiomatic PHP 5.4+ / modern PHP. -->
+	<rule ref="Universal.Arrays.DisallowShortArraySyntax">
+		<exclude name="Universal.Arrays.DisallowShortArraySyntax.Found"/>
+	</rule>
+
+	<!-- Yoda conditions conflict with PSR-12 and modern PHP style. -->
+	<rule ref="WordPress.PHP.YodaConditions">
+		<exclude name="WordPress.PHP.YodaConditions.NotYoda"/>
+	</rule>
+
+	<!-- Short ternary (?:) is valid PHP 5.3+ syntax. -->
+	<rule ref="Universal.Operators.DisallowShortTernary">
+		<exclude name="Universal.Operators.DisallowShortTernary.Found"/>
+	</rule>
+
 </ruleset>
