@@ -4,14 +4,20 @@ parameters:
         - src
     bootstrapFiles:
         - vendor/php-stubs/wordpress-stubs/wordpress-stubs.php
+    # PHPDoc array shapes are trusted as declared — avoids "is_array always true" false positives.
+    treatPhpDocTypesAsCertain: false
+    # Suppressed patterns that no longer match are non-fatal (patterns may be future-facing).
+    reportUnmatchedIgnoredErrors: false
+    excludePaths:
+        # WP-CLI classes extend WP_CLI_Command (no stubs) — excludePaths required in PHPStan 2.x.
+        - src/CLI
     ignoreErrors:
-        # WP-CLI classes/functions — no stubs package installed.
-        - '#WP_CLI#'
-        # Plugin classes scaffolded but not yet implemented (Admin, Ajax sub-providers).
-        - '#Instantiated class WPStarterPlugin\\\\(Admin|Ajax|Blocks|CLI|Services)\\\\[A-Za-z]+ not found#'
-        - '#Call to method [a-z]+\(\) on an unknown class WPStarterPlugin\\\\#'
         # Plugin-defined constants set in the main plugin file at runtime.
         - '#Constant WP_STARTER_PLUGIN_#'
+        # WP constants not covered by current stubs version.
+        - '#Constant HOUR_IN_SECONDS not found#'
+        # Trait used by providers registered at runtime — not statically detectable.
+        - '#Trait WPStarterPlugin\\Traits\\HasHooks is used zero times#'
         # DI container resolves by class name — type erased to object.
         - '#constructor expects .*WPStarterPlugin.*, object given#'
         - '#Call to an undefined method object::#'
