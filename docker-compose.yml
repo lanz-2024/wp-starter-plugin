@@ -1,0 +1,62 @@
+services:
+  wordpress:
+    image: wordpress:6.7-php8.3-apache
+    ports:
+      - "8080:80"
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DEBUG: "1"
+    volumes:
+      - wordpress_data:/var/www/html
+      - .:/var/www/html/wp-content/plugins/wp-starter-plugin
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+      MYSQL_ROOT_PASSWORD: rootpassword
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  wpcli:
+    image: wordpress:cli-php8.3
+    depends_on:
+      wordpress:
+        condition: service_started
+    volumes:
+      - wordpress_data:/var/www/html
+      - .:/var/www/html/wp-content/plugins/wp-starter-plugin
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+    command: >
+      sh -c "
+        sleep 10 &&
+        wp core install --url=http://localhost:8080 --title='WP Starter Plugin Dev' --admin_user=admin --admin_password=admin --admin_email=dev@example.com --allow-root &&
+        wp plugin activate wp-starter-plugin --allow-root &&
+        echo 'Setup complete'
+      "
+
+  adminer:
+    image: adminer
+    ports:
+      - "8081:8080"
+
+volumes:
+  wordpress_data:
+  db_data:
